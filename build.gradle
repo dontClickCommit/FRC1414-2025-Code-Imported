@@ -8,14 +8,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-
-repositories {
-    mavenCentral()
-    maven {
-        url 'https://maven.ctr-electronics.com/release/'
-    }
-}
-
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
@@ -63,8 +55,6 @@ dependencies {
     annotationProcessor wpi.java.deps.wpilibAnnotations()
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
-
-    implementation 'com.ctre.phoenix:phoenix-java:25.1.0'
 
     roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
     roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)
