@@ -16,32 +16,31 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.subsystems.MK4iSwerveModule;
+import frc.robot.subsystems.TalonFXSwerveModule;
 
 public class DrivetrainSubsystem extends SubsystemBase {
     private static DrivetrainSubsystem instance;
 
     /*
-     * Initialize swerve modules using MK4iSwerveModule.
+     * Initialize swerve modules using TalonFXSwerveModule.
      */
-    private final MK4iSwerveModule frontLeftSwerve = new MK4iSwerveModule(
+    private final TalonFXSwerveModule frontLeftSwerve = new TalonFXSwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
             DriveConstants.kFrontLeftTurningCanId,
             DriveConstants.kFrontLeftChassisAngularOffset);
 
-    private final MK4iSwerveModule frontRightSwerve = new MK4iSwerveModule(
+    private final TalonFXSwerveModule frontRightSwerve = new TalonFXSwerveModule(
             DriveConstants.kFrontRightDrivingCanId,
             DriveConstants.kFrontRightTurningCanId,
             DriveConstants.kFrontRightChassisAngularOffset);
 
-    private final MK4iSwerveModule rearLeftSwerve = new MK4iSwerveModule(
+    private final TalonFXSwerveModule rearLeftSwerve = new TalonFXSwerveModule(
             DriveConstants.kRearLeftDrivingCanId,
             DriveConstants.kRearLeftTurningCanId,
             DriveConstants.kBackLeftChassisAngularOffset);
 
-    private final MK4iSwerveModule rearRightSwerve = new MK4iSwerveModule(
+    private final TalonFXSwerveModule rearRightSwerve = new TalonFXSwerveModule(
             DriveConstants.kRearRightDrivingCanId,
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
