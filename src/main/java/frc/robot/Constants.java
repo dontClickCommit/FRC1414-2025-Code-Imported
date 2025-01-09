@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -18,6 +18,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
  * constants are needed, to reduce verbosity.
  */
   public final class Constants {
+
+    public static final class AutoConstants {
+      public static int kMaxSpeedMetersPerSecond = 4;
+    }
 
   public static final class DriveConstants {
 
@@ -55,13 +59,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
         public static final int kFrontRightTurningCanId = 21;
         public static final int kRearRightTurningCanId = 23;
 
+        public static final int kFrontLeftTurningEncoderCANId = 0;
+        public static final int kRearLeftTurningEncoderCANId = 0;
+        public static final int kFrontRightTurningEncoderCANId = 0;
+        public static final int kRearRightTurningEncoderCANId = 0;
+
         public static final double kAutoAimTeleopErrorMargin = 4;
         public static final double kAutoAimAutoErrorMargin = 4;
         public static final double kSlowMode = 0.1;
 
-        public static final double kAutoAimP = 3;
-        public static final double kAutoAimI = 0.0;
-        public static final double kAutoAimD = 0;
         public static final int kPigeonCanID = 60;
         public static final boolean kUsePigeon = false;
     }
@@ -96,8 +102,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
       public static final double kTurningMaxOutput = 1;
 
       // Updated for TalonFX Neutral Mode
-      public static final NeutralMode kDrivingMotorNeutralMode = NeutralMode.Brake;
-      public static final NeutralMode kTurningMotorNeutralMode = NeutralMode.Brake;
+      public static final NeutralModeValue kDrivingMotorNeutralMode = NeutralModeValue.Brake;
+      public static final NeutralModeValue kTurningMotorNeutralMode = NeutralModeValue.Brake;
 
       public static final int kDrivingMotorCurrentLimit = 40;
       public static final int kTurningMotorCurrentLimit = 30;

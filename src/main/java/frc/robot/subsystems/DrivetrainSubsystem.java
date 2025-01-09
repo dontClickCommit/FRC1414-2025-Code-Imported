@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.subsystems.TalonFXSwerveModule;
 
 public class DrivetrainSubsystem extends SubsystemBase {
@@ -29,21 +30,25 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final TalonFXSwerveModule frontLeftSwerve = new TalonFXSwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
             DriveConstants.kFrontLeftTurningCanId,
+            DriveConstants.kFrontLeftTurningEncoderCANId,
             DriveConstants.kFrontLeftChassisAngularOffset);
 
     private final TalonFXSwerveModule frontRightSwerve = new TalonFXSwerveModule(
             DriveConstants.kFrontRightDrivingCanId,
             DriveConstants.kFrontRightTurningCanId,
+            DriveConstants.kFrontRightTurningEncoderCANId,
             DriveConstants.kFrontRightChassisAngularOffset);
 
     private final TalonFXSwerveModule rearLeftSwerve = new TalonFXSwerveModule(
             DriveConstants.kRearLeftDrivingCanId,
             DriveConstants.kRearLeftTurningCanId,
+            DriveConstants.kRearLeftTurningEncoderCANId,
             DriveConstants.kBackLeftChassisAngularOffset);
 
     private final TalonFXSwerveModule rearRightSwerve = new TalonFXSwerveModule(
             DriveConstants.kRearRightDrivingCanId,
             DriveConstants.kRearRightTurningCanId,
+            DriveConstants.kRearRightTurningEncoderCANId,
             DriveConstants.kBackRightChassisAngularOffset);
 
     /*
