@@ -3,12 +3,15 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.hardware.Pigeon2 ;
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import frc.robot.Constants.ModuleConstants;
 
 public class TalonFXSwerveModule {
@@ -34,7 +37,7 @@ public class TalonFXSwerveModule {
         // Configure turning encoder
 
         // Set desired state to the current position
-        m_desiredState = new SwerveModuleState(0.0, new Rotation2d(m_turningEncoder.getAbsolutePosition()));
+        m_desiredState = new SwerveModuleState(0.0, new Rotation2d(m_turningEncoder.getAbsolutePosition().getValue()));
     }
 
     private void configureMotor(TalonFX motor, boolean isDrivingMotor) {
