@@ -1,17 +1,14 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.math.geometry.Rotation2d;
-
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfigurator;
-import com.ctre.phoenix6.hardware.CANcoder;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.hardware.Pigeon2;
 import frc.robot.Constants.ModuleConstants;
 
 public class TalonFXSwerveModule {
@@ -42,39 +39,43 @@ public class TalonFXSwerveModule {
 
     private void configureMotor(TalonFX motor, boolean isDrivingMotor) {
         TalonFXConfiguration config = new TalonFXConfiguration();
-        motor.configFactoryDefault();
+        motor.getConfigurator().apply(new TalonFXConfiguration());;
 
         if (isDrivingMotor) {
-            // Configure driving motor settings using constants
-            motor.config_kP(0, ModuleConstants.kDrivingP);
-            motor.config_kI(0, ModuleConstants.kDrivingI);
-            motor.config_kD(0, ModuleConstants.kDrivingD);
-            motor.config_kF(0, ModuleConstants.kDrivingFF);
-            motor.configContinuousCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
-            motor.setNeutralMode(ModuleConstants.kDrivingMotorIdleMode);
+            var motorConfigs = new Slot0Configs();
+            motorConfigs.kP = ModuleConstants.kDrivingP; 
+            motorConfigs.kI = ModuleConstants.kDrivingI; 
+            motorConfigs.kD = ModuleConstants.kDrivingD; 
+
+            motor.getConfigurator().apply(motorConfigs);
+
+            // APPLY LIMITS IN TUNER X - motor.configContinuousCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
+            motor.setNeutralMode(NeutralModeValue.Brake);
         } else {
-            // Configure turning motor settings using constants
-            motor.config_kP(0, ModuleConstants.kTurningP);
-            motor.config_kI(0, ModuleConstants.kTurningI);
-            motor.config_kD(0, ModuleConstants.kTurningD);
-            motor.config_kF(0, ModuleConstants.kTurningFF);
-            motor.configContinuousCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
-            motor.setNeutralMode(ModuleConstants.kTurningMotorIdleMode);
+            var motorConfigs = new Slot0Configs();
+            motorConfigs.kP = ModuleConstants.kTurningP; 
+            motorConfigs.kI = ModuleConstants.kTurningI; 
+            motorConfigs.kD = ModuleConstants.kTurningD; 
+
+            motor.getConfigurator().apply(motorConfigs);
+
+            // THE LIMITS NEED TO BE APPLIED IN TUNER X - motor.configContinuousCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
+            motor.setNeutralMode(NeutralModeValue.Brake);
         }
 
-        motor.configAllSettings(config);
+        // motor.configAllSettings(config); - THIS MIGHT CAUSE PROBLEMS IF SO LMK
     }
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(
-            m_drivingMotor.getSelectedSensorVelocity(), 
+            m_drivingMotor.getEncoder().getVelocity(), 
             new Rotation2d(Math.toRadians(m_turningEncoder.getAbsolutePosition()) - m_chassisAngularOffset)
         );
     }
 
-    public SwerveModulePosition getPosition() {
+    public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
-            m_drivingMotor.getSelectedSensorPosition(), 
+            m_drivingMotor.getEncoder().getVelocity(), 
             new Rotation2d(Math.toRadians(m_turningEncoder.getAbsolutePosition()) - m_chassisAngularOffset)
         );
     }
@@ -88,8 +89,8 @@ public class TalonFXSwerveModule {
         double driveVelocity = optimizedState.speedMetersPerSecond * ModuleConstants.kDriveEncoderVelocityConversionFactor;
         double turnPosition = optimizedState.angle.getRadians();
 
-        m_drivingMotor.set(ControlMode.Velocity, driveVelocity);
-        m_turningMotor.set(ControlMode.Position, turnPosition);
+        m_drivingMotor.set(driveVelocity);
+        m_turningMotor.set(turnPosition);
 
         m_desiredState = optimizedState;
     }
