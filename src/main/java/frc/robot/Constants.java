@@ -101,6 +101,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
       public static final double kTurningMinOutput = -1;
       public static final double kTurningMaxOutput = 1;
 
+      public static final double kDriveEncoderVelocityConversionFactor = 1;
+
       // Updated for TalonFX Neutral Mode
       public static final NeutralModeValue kDrivingMotorNeutralMode = NeutralModeValue.Brake;
       public static final NeutralModeValue kTurningMotorNeutralMode = NeutralModeValue.Brake;

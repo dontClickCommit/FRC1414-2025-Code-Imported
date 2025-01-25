@@ -9,6 +9,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Units;
 import frc.robot.Constants.ModuleConstants;
 
 public class TalonFXSwerveModule {
@@ -59,7 +60,7 @@ public class TalonFXSwerveModule {
 
             motor.getConfigurator().apply(motorConfigs);
 
-            // THE LIMITS NEED TO BE APPLIED IN TUNER X - motor.configContinuousCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
+            // APPLY LIMITS IN TUNER X - motor.configContinuousCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
             motor.setNeutralMode(NeutralModeValue.Brake);
         }
 
@@ -68,22 +69,22 @@ public class TalonFXSwerveModule {
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(
-            m_drivingMotor.getEncoder().getVelocity(), 
-            new Rotation2d(Math.toRadians(m_turningEncoder.getAbsolutePosition()) - m_chassisAngularOffset)
+            m_drivingMotor.getVelocity().getValueAsDouble(), 
+            new Rotation2d(Math.toRadians(m_turningEncoder.getAbsolutePosition().getValueAsDouble()) - m_chassisAngularOffset)
         );
     }
 
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
-            m_drivingMotor.getEncoder().getVelocity(), 
-            new Rotation2d(Math.toRadians(m_turningEncoder.getAbsolutePosition()) - m_chassisAngularOffset)
+            m_drivingMotor.getPosition().getValueAsDouble(), 
+            new Rotation2d(Math.toRadians(m_turningEncoder.getAbsolutePosition().getValueAsDouble()) - m_chassisAngularOffset)
         );
     }
 
     public void setDesiredState(SwerveModuleState desiredState) {
         SwerveModuleState optimizedState = SwerveModuleState.optimize(
             desiredState, 
-            new Rotation2d(Math.toRadians(m_turningEncoder.getAbsolutePosition()))
+            new Rotation2d(Math.toRadians(m_turningEncoder.getAbsolutePosition().getValueAsDouble() - m_chassisAngularOffset))
         );
 
         double driveVelocity = optimizedState.speedMetersPerSecond * ModuleConstants.kDriveEncoderVelocityConversionFactor;
@@ -95,8 +96,8 @@ public class TalonFXSwerveModule {
         m_desiredState = optimizedState;
     }
 
-    public void resetEncoders() {
-        m_drivingMotor.setSelectedSensorPosition(0);
-        m_turningMotor.setSelectedSensorPosition(0);
-    }
+    // public void resetEncoders() {
+    //     m_drivingMotor.setSelectedSensorPosition(0);
+    //     m_turningMotor.setSelectedSensorPosition(0);
+    // }
 }

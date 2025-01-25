@@ -151,12 +151,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
         };
     }
 
-    public void resetEncoders() {
-        frontLeftSwerve.resetEncoders();
-        frontRightSwerve.resetEncoders();
-        rearLeftSwerve.resetEncoders();
-        rearRightSwerve.resetEncoders();
-    }
+    // public void resetEncoders() {
+    //     frontLeftSwerve.resetEncoders();
+    //     frontRightSwerve.resetEncoders();
+    //     rearLeftSwerve.resetEncoders();
+    //     rearRightSwerve.resetEncoders();
+    // }
 
     public Rotation2d getHeading() {
         return pigeon.getRotation2d();
